@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const port = process.env.PORT || 5000;
 
 const uri = process.env.MONGODB_URI;
@@ -44,17 +44,26 @@ async function run() {
       }
     });
 
-    app.get("/labours",async(req,res)=>{
+    app.get("/labours", async (req, res) => {
       try {
-
-        const cursor=labourCollections.find()
-        const result=await cursor.toArray()
-        res.json(result)
-        
+        const cursor = labourCollections.find();
+        const result = await cursor.toArray();
+        res.json(result);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    })
+    });
+
+    app.get("/labours/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const result = await labourCollections.findOne(query);
+        res.json(result);
+      } catch (error) {
+        console.log(error);
+      }
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
