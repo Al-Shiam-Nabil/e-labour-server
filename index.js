@@ -57,8 +57,36 @@ async function run() {
     app.get("/labours/:id", async (req, res) => {
       try {
         const id = req.params.id;
+
+        if (!ObjectId.isValid(id)) {
+          return res.status(400).json({ error: "Invalid ID format" });
+        }
+
         const query = { _id: new ObjectId(id) };
+
         const result = await labourCollections.findOne(query);
+
+        if (!result) {
+          return res.status(404).json({ error: "Labour not found" });
+        }
+
+        res.json(result);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    // my labours
+    app.get("/my-labours", async (req, res) => {
+      try {
+        const { email } = req.query;
+        const query = {};
+        if (email) {
+          query.submitted_by_email = email;
+        }
+
+        const cursor = labourCollections.find(query);
+        const result = await cursor.toArray();
         res.json(result);
       } catch (error) {
         console.log(error);
