@@ -80,6 +80,7 @@ async function run() {
     app.get("/my-labours", async (req, res) => {
       try {
         const { email } = req.query;
+        console.log(email);
         const query = {};
         if (email) {
           query.submitted_by_email = email;
@@ -87,6 +88,20 @@ async function run() {
 
         const cursor = labourCollections.find(query);
         const result = await cursor.toArray();
+        res.json(result);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    // delete
+
+    app.delete("/labours/:id", async (req, res) => {
+      try {
+        const { id } = req.params;
+        const query = { _id: new ObjectId(id) };
+
+        const result = await labourCollections.deleteOne(query);
         res.json(result);
       } catch (error) {
         console.log(error);
