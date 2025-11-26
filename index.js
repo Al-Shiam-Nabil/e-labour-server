@@ -29,6 +29,21 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+    const database = client.db("e-labour");
+    const labourCollections = database.collection("labourers");
+
+    app.post("/labours", async (req, res) => {
+      try {
+        const labourInfo = req.body;
+        console.log(labourInfo);
+
+        const result = await labourCollections.insertOne(labourInfo);
+        res.json(result);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
