@@ -44,6 +44,18 @@ async function run() {
       }
     });
 
+    app.get("/labours",async(req,res)=>{
+      try {
+
+        const cursor=labourCollections.find()
+        const result=await cursor.toArray()
+        res.json(result)
+        
+      } catch (error) {
+        console.log(error)
+      }
+    })
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
