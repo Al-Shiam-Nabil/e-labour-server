@@ -1,4 +1,4 @@
-# 🧑 E-Labour – Online Labour Hiring Platform
+#  E-Labour – Online Labour Hiring Platform
 
 E-Labour is a modern online platform designed to help users easily find, hire, and contact skilled labourers based on category, location, and availability. The system provides an intuitive and user-friendly interface for users to browse labourers, view detailed information, and manage their own added workers through a private dashboard.
 
