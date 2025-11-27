@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const database = client.db("e-labour");
     const labourCollections = database.collection("labourers");
@@ -35,7 +35,6 @@ async function run() {
     app.post("/labours", async (req, res) => {
       try {
         const labourInfo = req.body;
-        console.log(labourInfo);
 
         const result = await labourCollections.insertOne(labourInfo);
         res.json(result);
@@ -80,7 +79,7 @@ async function run() {
     app.get("/my-labours", async (req, res) => {
       try {
         const { email } = req.query;
-        console.log(email);
+
         const query = {};
         if (email) {
           query.submitted_by_email = email;
@@ -109,7 +108,7 @@ async function run() {
     });
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
